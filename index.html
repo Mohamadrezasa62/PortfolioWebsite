@@ -1,0 +1,2567 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="theme-color" content="#00de51" />
+  <title>Ahmad Nahvi - Web Designer</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    /* =====================
+       CSS VARIABLES / TOKENS
+    ===================== */
+    :root {
+      --clr-bg: #0a0a0a;
+      --clr-bg2: #111111;
+      --clr-surface: #161616;
+      --clr-border: rgba(255,255,255,0.08);
+      --clr-accent: #00de51;
+      --clr-accent-dim: rgba(0, 222, 81, 0.12);
+      --clr-text: #f0f0f0;
+      --clr-muted: #888;
+      --clr-white: #ffffff;
+
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 100px;
+
+      --transition: 0.3s ease;
+      --nav-h: 72px;
+    }
+
+    /* =====================
+       RESET & BASE
+    ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--clr-accent); color: #000; }
+
+    a { color: inherit; text-decoration: none; }
+
+    img { max-width: 100%; display: block; }
+
+    section { padding: 100px 0; }
+
+    .container { max-width: 1200px; padding-inline: 24px; margin-inline: auto; }
+
+    /* =====================
+       TYPOGRAPHY
+    ===================== */
+    .display-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    /* =====================
+       UTILITY
+    ===================== */
+    .accent { color: var(--clr-accent); }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--clr-border);
+      background: var(--clr-surface);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--clr-muted);
+    }
+
+    .badge-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--clr-accent);
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .btn-primary-custom {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--clr-accent);
+      color: #000;
+      font-weight: 700;
+      font-size: 15px;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-primary-custom:hover { background: #00ff5e; transform: translateY(-2px); color: #000; }
+
+    .btn-outline-custom {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: transparent;
+      color: var(--clr-text);
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--clr-border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-outline-custom:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
+
+    /* =====================
+       SCROLLBAR
+    ===================== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--clr-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--clr-accent); border-radius: 2px; }
+
+    /* =====================
+       NAVBAR
+    ===================== */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    #navbar.scrolled {
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--clr-white);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--clr-accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--clr-muted);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--clr-accent);
+      border-radius: 2px;
+      transition: width var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--clr-white); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-cta {
+      padding: 9px 22px;
+      background: var(--clr-accent);
+      color: #000 !important;
+      font-weight: 700 !important;
+      font-size: 14px;
+      border-radius: var(--radius-pill);
+      transition: background var(--transition), transform var(--transition) !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: #00ff5e !important; transform: translateY(-2px) !important; }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--clr-text);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* Mobile menu */
+    .nav-mobile {
+      position: fixed;
+      top: var(--nav-h); left: 0; right: 0;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--clr-border);
+      padding: 24px;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 999;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--clr-muted);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--clr-border);
+      transition: color var(--transition);
+    }
+    .nav-mobile a:hover { color: var(--clr-accent); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* =====================
+       HERO SECTION
+    ===================== */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-glow {
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(0,222,81,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-tag { margin-bottom: 20px; }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: var(--clr-muted);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-social {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 48px;
+    }
+
+    .hero-social a {
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      color: var(--clr-muted);
+      font-size: 18px;
+      transition: var(--transition);
+    }
+    .hero-social a:hover {
+      border-color: var(--clr-accent);
+      color: var(--clr-accent);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Card */
+    .hero-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--clr-accent), transparent);
+    }
+
+    .hero-card-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--clr-accent);
+      margin-bottom: 16px;
+      object-fit: cover;
+    }
+
+    .hero-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .hero-card p {
+      font-size: 13px;
+      color: var(--clr-muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .hero-stat {
+      background: var(--clr-bg2);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--clr-accent);
+    }
+
+    .hero-stat span {
+      font-size: 12px;
+      color: var(--clr-muted);
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-card { max-width: 400px; }
+    }
+
+    /* =====================
+       CLIENTS MARQUEE
+    ===================== */
+    .marquee-section {
+      padding: 40px 0;
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      animation: marquee-scroll 30s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-section:hover .marquee-track { animation-play-state: paused; }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      color: var(--clr-muted);
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0.5;
+      transition: opacity var(--transition);
+    }
+    .marquee-item:hover { opacity: 1; }
+
+    .marquee-item img {
+      height: 24px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.4;
+    }
+
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+        /* =====================
+       ABOUT SECTION
+    ===================== */
+    #about { background: var(--clr-bg); }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      color: var(--clr-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .about-text p:first-of-type {
+      font-size: 18px;
+      color: var(--clr-text);
+    }
+
+    /* Certificates Swiper */
+    .certs-swiper-wrap {
+      margin-top: 48px;
+    }
+
+    .certs-swiper-wrap .section-label { margin-bottom: 16px; }
+
+    .cert-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: default;
+      transition: border-color var(--transition);
+    }
+    .cert-card:hover { border-color: var(--clr-accent); }
+
+    .cert-thumb {
+      width: 56px; height: 56px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--clr-bg2);
+    }
+
+    .cert-info strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--clr-text);
+      margin-bottom: 4px;
+    }
+
+    .cert-info span {
+      font-size: 12px;
+      color: var(--clr-muted);
+    }
+
+    .cert-year {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--clr-accent);
+      background: var(--clr-accent-dim);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    /* About right: big quote card */
+    .about-quote-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-quote-card::before {
+      content: '"';
+      position: absolute;
+      top: -20px; right: 24px;
+      font-size: 160px;
+      font-family: var(--font-display);
+      color: var(--clr-accent);
+      opacity: 0.08;
+      line-height: 1;
+    }
+
+    .about-quote-card blockquote {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--clr-text);
+      margin-bottom: 32px;
+    }
+
+    .about-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .chip {
+      padding: 7px 16px;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--clr-muted);
+      background: var(--clr-bg2);
+      transition: var(--transition);
+    }
+    .chip:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
+
+    @media (max-width: 900px) {
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    /* =====================
+       EDUCATION / EXPERIENCE TIMELINE
+    ===================== */
+    #education { background: var(--clr-bg2); }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-top: 60px;
+    }
+
+    .edu-col-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .edu-col-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--clr-border);
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 19px; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--clr-border);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      padding-bottom: 36px;
+      position: relative;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--clr-surface);
+      border: 2px solid var(--clr-border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      z-index: 1;
+      transition: var(--transition);
+    }
+    .timeline-item:hover .tl-dot {
+      border-color: var(--clr-accent);
+      background: var(--clr-accent-dim);
+    }
+    .tl-dot svg { width: 16px; height: 16px; color: var(--clr-muted); }
+    .timeline-item:hover .tl-dot svg { color: var(--clr-accent); }
+
+    .tl-body {
+      padding-top: 6px;
+    }
+
+    .tl-year {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--clr-accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .tl-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--clr-text);
+      margin-bottom: 4px;
+    }
+
+    .tl-org {
+      font-size: 13px;
+      color: var(--clr-accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .tl-desc {
+      font-size: 14px;
+      color: var(--clr-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .edu-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+        /* =====================
+       WORK / PORTFOLIO
+    ===================== */
+    #work { background: var(--clr-bg); }
+
+    .work-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .work-swiper { overflow: visible !important; }
+
+    .work-slide {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition);
+      cursor: pointer;
+    }
+    .work-slide:hover {
+      border-color: var(--clr-accent);
+      transform: translateY(-4px);
+    }
+
+    .work-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+    }
+
+    .work-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .work-slide:hover .work-img-wrap img { transform: scale(1.05); }
+
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .work-slide:hover .work-overlay { opacity: 1; }
+
+    .work-overlay a {
+      padding: 10px 24px;
+      background: var(--clr-accent);
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: var(--radius-pill);
+      transition: background var(--transition);
+    }
+    .work-overlay a:hover { background: #00ff5e; }
+
+    .work-info {
+      padding: 24px;
+    }
+
+    .work-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .work-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--clr-border);
+      color: var(--clr-muted);
+    }
+
+    .work-year {
+      font-size: 11px;
+      color: var(--clr-muted);
+      margin-left: auto;
+    }
+
+    .work-info h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .work-info p {
+      font-size: 14px;
+      color: var(--clr-muted);
+      line-height: 1.6;
+    }
+
+    .work-attrs {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--clr-border);
+      flex-wrap: wrap;
+    }
+
+    .work-attr {
+      font-size: 12px;
+      color: var(--clr-muted);
+    }
+    .work-attr strong {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--clr-accent);
+      margin-bottom: 2px;
+    }
+
+    /* Swiper nav custom */
+    .swiper-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 36px;
+      justify-content: center;
+    }
+
+    .swiper-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--clr-border);
+      background: var(--clr-surface);
+      color: var(--clr-text);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .swiper-btn:hover {
+      border-color: var(--clr-accent);
+      color: var(--clr-accent);
+    }
+
+    .swiper-counter {
+      font-size: 13px;
+      color: var(--clr-muted);
+      min-width: 48px;
+      text-align: center;
+    }
+    .swiper-counter span { color: var(--clr-text); font-weight: 700; }
+
+    /* =====================
+       SERVICES
+    ===================== */
+    #service { background: var(--clr-bg2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .service-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .service-card:hover {
+      border-color: var(--clr-accent);
+      transform: translateY(-4px);
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--clr-accent);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+      transform-origin: left;
+    }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--clr-accent-dim);
+      border: 1px solid rgba(0,222,81,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--clr-accent);
+    }
+
+    .service-icon svg { width: 24px; height: 24px; }
+
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: var(--clr-muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .service-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .service-features li {
+      font-size: 13px;
+      color: var(--clr-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .service-features li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--clr-accent);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
+        /* =====================
+       TECH STACK
+    ===================== */
+    #tech { background: var(--clr-bg); }
+
+    .tech-header {
+      max-width: 600px;
+      margin-bottom: 60px;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+    }
+
+    .tech-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      transition: border-color var(--transition), transform var(--transition);
+      cursor: default;
+    }
+    .tech-card:hover {
+      border-color: var(--clr-accent);
+      transform: translateY(-4px);
+    }
+
+    .tech-card img {
+      width: 40px; height: 40px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.7;
+      transition: opacity var(--transition), filter var(--transition);
+    }
+    .tech-card:hover img {
+      opacity: 1;
+      filter: none;
+    }
+
+    .tech-card strong {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--clr-text);
+    }
+
+    .tech-card span {
+      font-size: 11px;
+      color: var(--clr-muted);
+    }
+
+    /* =====================
+       TESTIMONIALS
+    ===================== */
+    #testimonial { background: var(--clr-bg2); }
+
+    .testi-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .testi-stats {
+      display: flex;
+      gap: 32px;
+    }
+
+    .testi-stat strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--clr-accent);
+      line-height: 1;
+    }
+
+    .testi-stat span {
+      font-size: 13px;
+      color: var(--clr-muted);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .testi-swiper { padding-bottom: 48px !important; }
+
+    .testi-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      transition: border-color var(--transition);
+    }
+    .testi-card:hover { border-color: var(--clr-accent); }
+
+    .testi-quote {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--clr-text);
+      flex: 1;
+      position: relative;
+      padding-top: 8px;
+    }
+    .testi-quote::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 64px;
+      color: var(--clr-accent);
+      opacity: 0.3;
+      line-height: 0;
+      position: absolute;
+      top: 24px; left: -4px;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--clr-border);
+    }
+
+    .testi-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--clr-border);
+    }
+
+    .testi-author strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .testi-author span {
+      font-size: 12px;
+      color: var(--clr-muted);
+    }
+
+    .testi-stars {
+      margin-left: auto;
+      color: #f59e0b;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    /* Swiper pagination dots */
+    .swiper-pagination-bullet {
+      background: var(--clr-muted) !important;
+      opacity: 0.4 !important;
+    }
+    .swiper-pagination-bullet-active {
+      background: var(--clr-accent) !important;
+      opacity: 1 !important;
+      width: 20px !important;
+      border-radius: 4px !important;
+    }
+
+    /* =====================
+       CONTACT
+    ===================== */
+    #contact { background: var(--clr-bg); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-info p {
+      font-size: 16px;
+      color: var(--clr-muted);
+      line-height: 1.8;
+      margin-top: 20px;
+      margin-bottom: 36px;
+    }
+
+    .contact-email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--clr-accent);
+      transition: gap var(--transition);
+    }
+    .contact-email-link:hover { gap: 16px; color: var(--clr-accent); }
+
+    .contact-quote {
+      margin-top: 48px;
+      padding: 24px;
+      border-left: 2px solid var(--clr-accent);
+      background: var(--clr-surface);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    .contact-quote p {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--clr-text);
+      margin: 0 0 8px;
+      line-height: 1.6;
+    }
+
+    .contact-quote cite {
+      font-size: 13px;
+      color: var(--clr-muted);
+      font-style: normal;
+    }
+
+    /* Form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--clr-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      color: var(--clr-text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--clr-accent);
+      box-shadow: 0 0 0 3px var(--clr-accent-dim);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #444; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-submit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--clr-muted);
+    }
+
+    .form-success {
+      display: none;
+      padding: 16px;
+      background: var(--clr-accent-dim);
+      border: 1px solid rgba(0,222,81,0.3);
+      border-radius: var(--radius-md);
+      color: var(--clr-accent);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* =====================
+       FOOTER
+    ===================== */
+    footer {
+      background: var(--clr-bg2);
+      border-top: 1px solid var(--clr-border);
+      padding: 48px 0 32px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .footer-logo span { color: var(--clr-accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: var(--clr-muted);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--clr-accent); }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+    }
+
+    .footer-social a {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--clr-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--clr-muted);
+      font-size: 16px;
+      transition: var(--transition);
+    }
+    .footer-social a:hover {
+      border-color: var(--clr-accent);
+      color: var(--clr-accent);
+    }
+
+    .footer-bottom {
+      padding-top: 24px;
+      border-top: 1px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-bottom p {
+      font-size: 13px;
+      color: var(--clr-muted);
+    }
+
+    .footer-bottom a {
+      color: var(--clr-accent);
+    }
+
+    .back-to-top {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--clr-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .back-to-top:hover {
+      border-color: var(--clr-accent);
+      color: var(--clr-accent);
+      transform: translateY(-2px);
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">Ahmad<span>.</span></a>
+
+      <ul class="nav-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#service">Services</a></li>
+        <li><a href="#tech">Tech</a></li>
+        <li><a href="#testimonial">Testimonials</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+
+      <div class="nav-hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="nav-mobile" id="mobileMenu">
+    <a href="#home" onclick="closeMobile()">Home</a>
+    <a href="#about" onclick="closeMobile()">About</a>
+    <a href="#education" onclick="closeMobile()">Education</a>
+    <a href="#work" onclick="closeMobile()">Work</a>
+    <a href="#service" onclick="closeMobile()">Services</a>
+    <a href="#tech" onclick="closeMobile()">Tech</a>
+    <a href="#testimonial" onclick="closeMobile()">Testimonials</a>
+    <a href="#contact" onclick="closeMobile()">Contact</a>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="home">
+    <div class="hero-bg-glow"></div>
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Left: Text -->
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span class="badge-pill">
+              <span class="dot"></span>
+              Available for Work
+            </span>
+          </div>
+
+          <h1 class="hero-title">
+            Hey, I'm Ahmad<br>
+            <span class="accent" id="typewriter"></span>
+          </h1>
+
+          <p class="hero-subtitle">
+            I create clean WordPress websites with smart design, SEO, and custom development.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary-custom">Let's talk →</a>
+            <a href="#work" class="btn-outline-custom">View Work</a>
+          </div>
+
+          <div class="hero-social">
+            <!-- SVG Icons inline for zero dependency -->
+            <a href="https://x.com/a_nahvi" target="_blank" title="Twitter/X">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/a-nahvi" target="_blank" title="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://instagram.com/a_nahvi" target="_blank" title="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="https://t.me/a_nahvi" target="_blank" title="Telegram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
+            <a href="https://github.com/a-nahvi" target="_blank" title="GitHub">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
+            <a href="https://wa.me/989023751746" target="_blank" title="WhatsApp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Card -->
+        <div class="hero-card">
+          <img
+            src="https://ahmadnahvi.com/wp-content/uploads/2026/06/avatar-boy1.webp"
+            alt="Ahmad Nahvi"
+            class="hero-card-avatar"
+            onerror="this.style.display='none'"
+          />
+          <h3>Ahmad Nahvi</h3>
+          <p>Web Designer & WordPress Developer</p>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <strong id="count-years">0</strong>
+              <span>Years Experience</span>
+            </div>
+            <div class="hero-stat">
+              <strong id="count-projects">0</strong>
+              <span>Projects Done</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CLIENTS MARQUEE ===================== -->
+  <div class="marquee-section">
+    <div class="marquee-track" id="marqueeTrack">
+      <!-- Items duplicated for seamless loop -->
+      <div class="marquee-item">Takceram</div>
+      <div class="marquee-item">Aprin Pharmed</div>
+      <div class="marquee-item">Creativeplay</div>
+      <div class="marquee-item">Mokri Azarakhsh</div>
+      <div class="marquee-item">Kohalpack</div>
+      <div class="marquee-item">Kimia Kala Razi</div>
+      <div class="marquee-item">ESA Holding</div>
+      <div class="marquee-item">Nardebanino</div>
+      <div class="marquee-item">Piyatech</div>
+      <div class="marquee-item">Reyhan Department</div>
+      <div class="marquee-item">Zohavoc</div>
+      <div class="marquee-item">Roma Dental Clinic</div>
+      <!-- Duplicate -->
+      <div class="marquee-item">Takceram</div>
+      <div class="marquee-item">Aprin Pharmed</div>
+      <div class="marquee-item">Creativeplay</div>
+      <div class="marquee-item">Mokri Azarakhsh</div>
+      <div class="marquee-item">Kohalpack</div>
+      <div class="marquee-item">Kimia Kala Razi</div>
+      <div class="marquee-item">ESA Holding</div>
+      <div class="marquee-item">Nardebanino</div>
+      <div class="marquee-item">Piyatech</div>
+      <div class="marquee-item">Reyhan Department</div>
+      <div class="marquee-item">Zohavoc</div>
+      <div class="marquee-item">Roma Dental Clinic</div>
+    </div>
+  </div>
+
+  <!-- Placeholder sections (will be built next) -->
+    <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="container">
+      <div class="about-inner">
+
+        <!-- Left -->
+        <div class="about-left">
+          <span class="section-label">About</span>
+          <h2 class="section-title" style="margin-bottom:28px">
+            Designing brands and<br>websites with <span class="accent">clarity</span>
+          </h2>
+
+          <div class="about-text">
+            <p>
+              I design modern websites with CMS tools like WordPress, helping small businesses
+              build a stronger online presence through smart design, SEO, and website optimization.
+            </p>
+            <p>
+              As a webmaster, I also work on Google Ads and digital growth strategies to help
+              brands reach wider audiences — always learning, improving, and making the
+              "impossible" possible.
+            </p>
+          </div>
+
+          <div class="about-chips">
+            <span class="chip">WordPress</span>
+            <span class="chip">Elementor</span>
+            <span class="chip">Figma</span>
+            <span class="chip">SEO</span>
+            <span class="chip">Google Ads</span>
+            <span class="chip">WooCommerce</span>
+            <span class="chip">HTML / CSS</span>
+            <span class="chip">JavaScript</span>
+          </div>
+
+          <!-- Certificates -->
+          <div class="certs-swiper-wrap">
+            <span class="section-label">Certificates</span>
+            <div class="swiper certs-swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <div class="cert-card">
+                    <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/Search-Console.webp" alt="" class="cert-thumb" onerror="this.style.background='#222'"/>
+                    <div class="cert-info">
+                      <strong>Google Search Console</strong>
+                      <span>Websima Academy</span>
+                    </div>
+                    <span class="cert-year">2019</span>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cert-card">
+                    <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/White-Hat-Link-Building.webp" alt="" class="cert-thumb" onerror="this.style.background='#222'"/>
+                    <div class="cert-info">
+                      <strong>White Hat Link Building</strong>
+                      <span>Websima Academy</span>
+                    </div>
+                    <span class="cert-year">2019</span>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cert-card">
+                    <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/Advance-SEO-Techniques.webp" alt="" class="cert-thumb" onerror="this.style.background='#222'"/>
+                    <div class="cert-info">
+                      <strong>Advance SEO Techniques</strong>
+                      <span>Websima Academy</span>
+                    </div>
+                    <span class="cert-year">2019</span>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cert-card">
+                    <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/Technical-SEO.webp" alt="" class="cert-thumb" onerror="this.style.background='#222'"/>
+                    <div class="cert-info">
+                      <strong>Technical SEO</strong>
+                      <span>Websima Academy</span>
+                    </div>
+                    <span class="cert-year">2018</span>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="cert-card">
+                    <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/Content-Marketing.webp" alt="" class="cert-thumb" onerror="this.style.background='#222'"/>
+                    <div class="cert-info">
+                      <strong>Content Marketing</strong>
+                      <span>Websima Academy</span>
+                    </div>
+                    <span class="cert-year">2017</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Quote Card -->
+        <div class="about-right" style="position:sticky;top:calc(var(--nav-h) + 24px)">
+          <div class="about-quote-card">
+            <blockquote>
+              Helping brands and business owners design modern websites, improve their online
+              presence, and build scalable WordPress experiences.
+            </blockquote>
+
+            <div style="display:flex;align-items:center;gap:12px;padding-top:24px;border-top:1px solid var(--clr-border)">
+              <img
+                src="https://ahmadnahvi.com/wp-content/uploads/2026/06/avatar-boy1.webp"
+                alt="Ahmad"
+                style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--clr-accent)"
+                onerror="this.style.display='none'"
+              />
+              <div>
+                <strong style="display:block;font-size:15px">Ahmad Nahvi</strong>
+                <span style="font-size:13px;color:var(--clr-muted)">Freelance since 2022</span>
+              </div>
+              <div style="margin-left:auto">
+                <span class="badge-pill">
+                  <span class="dot"></span>
+                  Available
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EDUCATION & EXPERIENCE ===================== -->
+  <section id="education">
+    <div class="container">
+      <span class="section-label">Background</span>
+      <h2 class="section-title">Education & Experience</h2>
+
+      <div class="edu-grid">
+
+        <!-- Experience -->
+        <div>
+          <div class="edu-col-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            Work Experience
+          </div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="tl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/></svg>
+              </div>
+              <div class="tl-body">
+                <div class="tl-year">2010 — 2012</div>
+                <div class="tl-title">Webmaster</div>
+                <div class="tl-org">Yasrebi Group</div>
+                <div class="tl-desc">
+                  Practical experience in content production, website maintenance, and IT support
+                  across five platforms, strengthening technical problem-solving skills.
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/></svg>
+              </div>
+              <div class="tl-body">
+                <div class="tl-year">2021 — 2022</div>
+                <div class="tl-title">Web Designer</div>
+                <div class="tl-org">Dadevarzan</div>
+                <div class="tl-desc">
+                  Designed and redesigned bilingual corporate and e-commerce websites remotely,
+                  focusing on custom functionalities and user experience.
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot" style="border-color:var(--clr-accent);background:var(--clr-accent-dim)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--clr-accent)" stroke-width="2"><circle cx="12" cy="12" r="4"/></svg>
+              </div>
+              <div class="tl-body">
+                <div class="tl-year">2022 — Present</div>
+                <div class="tl-title">Freelance Web Developer</div>
+                <div class="tl-org" style="color:var(--clr-accent)">Independent</div>
+                <div class="tl-desc">
+                  Helping brands and business owners design modern websites, improve their online
+                  presence, and build scalable WordPress experiences.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificates -->
+        <div>
+          <div class="edu-col-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Certifications
+          </div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="tl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="tl-body">
+                <div class="tl-year">2017</div>
+                <div class="tl-title">Content Marketing</div>
+                <div class="tl-org">Websima Academy</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="tl-body">
+                <div class="tl-year">2018</div>
+                <div class="tl-title">Technical SEO</div>
+                <div class="tl-org">Websima Academy</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="tl-body">
+                <div class="tl-year">2019</div>
+                <div class="tl-title">Advance SEO Techniques</div>
+                <div class="tl-org">Websima Academy</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="tl-body">
+                <div class="tl-year">2019</div>
+                <div class="tl-title">White Hat Link Building</div>
+                <div class="tl-org">Websima Academy</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="tl-body">
+                <div class="tl-year">2019</div>
+                <div class="tl-title">Google Search Console</div>
+                <div class="tl-org">Websima Academy</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+    <!-- ===================== WORK / PORTFOLIO ===================== -->
+  <section id="work">
+    <div class="container">
+      <div class="work-header">
+        <div>
+          <span class="section-label">Work Highlights</span>
+          <h2 class="section-title">Selected Projects</h2>
+        </div>
+        <a href="#contact" class="btn-outline-custom" style="flex-shrink:0">Start a project →</a>
+      </div>
+
+      <div class="swiper work-swiper" id="workSwiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="work-slide">
+              <div class="work-img-wrap">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/work-1-1.webp" alt="Piyatech" onerror="this.style.background='#1a1a1a'" />
+                <div class="work-overlay"><a href="https://piyatech.com/" target="_blank">View Website ↗</a></div>
+              </div>
+              <div class="work-info">
+                <div class="work-meta">
+                  <span class="work-tag">Brand</span>
+                  <span class="work-tag">Website</span>
+                  <span class="work-year">2019</span>
+                </div>
+                <h3>Piyatech</h3>
+                <p>Brand and website for a drone startup, blending futuristic visuals with trust-driven design.</p>
+                <div class="work-attrs">
+                  <div class="work-attr"><strong>Type</strong>Semi-Custom Theme</div>
+                  <div class="work-attr"><strong>Field</strong>Drone Technology</div>
+                  <div class="work-attr"><strong>Design</strong>Responsive</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="work-slide">
+              <div class="work-img-wrap">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/work-2-1.webp" alt="Takceram" onerror="this.style.background='#1a1a1a'" />
+                <div class="work-overlay"><a href="https://takceram.co.ir/" target="_blank">View Website ↗</a></div>
+              </div>
+              <div class="work-info">
+                <div class="work-meta">
+                  <span class="work-tag">Redesign</span>
+                  <span class="work-tag">E-commerce</span>
+                  <span class="work-year">2024</span>
+                </div>
+                <h3>Takceram</h3>
+                <p>Minimal e-commerce identity and website crafted to highlight timeless tile and ceramic products.</p>
+                <div class="work-attrs">
+                  <div class="work-attr"><strong>Type</strong>Website Redesign</div>
+                  <div class="work-attr"><strong>Field</strong>Tile & Ceramic</div>
+                  <div class="work-attr"><strong>Design</strong>Responsive</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="work-slide">
+              <div class="work-img-wrap">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/work-3-1.webp" alt="ESA Holding" onerror="this.style.background='#1a1a1a'" />
+                <div class="work-overlay"><a href="https://esaholding.com/" target="_blank">View Website ↗</a></div>
+              </div>
+              <div class="work-info">
+                <div class="work-meta">
+                  <span class="work-tag">Brand</span>
+                  <span class="work-tag">Corporate</span>
+                  <span class="work-year">2024</span>
+                </div>
+                <h3>ESA Holding</h3>
+                <p>Corporate landing experience for a machinery company, built to inspire trust and brand authority.</p>
+                <div class="work-attrs">
+                  <div class="work-attr"><strong>Type</strong>Semi-Custom Theme</div>
+                  <div class="work-attr"><strong>Field</strong>Machinery</div>
+                  <div class="work-attr"><strong>Design</strong>Responsive</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="work-slide">
+              <div class="work-img-wrap">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/work-5.webp" alt="Harry Potter Podcast" onerror="this.style.background='#1a1a1a'" />
+                <div class="work-overlay"><a href="https://harrypotterpodcast.ir/" target="_blank">View Website ↗</a></div>
+              </div>
+              <div class="work-info">
+                <div class="work-meta">
+                  <span class="work-tag">Brand</span>
+                  <span class="work-tag">Podcast</span>
+                  <span class="work-year">2026</span>
+                </div>
+                <h3>Harry Potter Podcast</h3>
+                <p>A themed podcast website with immersive visual storytelling and custom WordPress integration.</p>
+                <div class="work-attrs">
+                  <div class="work-attr"><strong>Type</strong>Semi-Custom Theme</div>
+                  <div class="work-attr"><strong>Field</strong>Podcast</div>
+                  <div class="work-attr"><strong>Design</strong>Responsive</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="work-slide">
+              <div class="work-img-wrap">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/work-6.webp" alt="Kimia Kala Razi" onerror="this.style.background='#1a1a1a'" />
+                <div class="work-overlay"><a href="https://kimiakalarazi.com/" target="_blank">View Website ↗</a></div>
+              </div>
+              <div class="work-info">
+                <div class="work-meta">
+                  <span class="work-tag">Corporate</span>
+                  <span class="work-tag">Pharma</span>
+                  <span class="work-year">2026</span>
+                </div>
+                <h3>Kimia Kala Razi</h3>
+                <p>Professional website for a pharmaceutical company, balancing clinical clarity with modern aesthetics.</p>
+                <div class="work-attrs">
+                  <div class="work-attr"><strong>Type</strong>Semi-Custom Theme</div>
+                  <div class="work-attr"><strong>Field</strong>Pharmaceutical</div>
+                  <div class="work-attr"><strong>Design</strong>Responsive</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="work-slide">
+              <div class="work-img-wrap">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/work-7.webp" alt="Nardebanino" onerror="this.style.background='#1a1a1a'" />
+                <div class="work-overlay"><a href="https://nardebanino.com/" target="_blank">View Website ↗</a></div>
+              </div>
+              <div class="work-info">
+                <div class="work-meta">
+                  <span class="work-tag">Education</span>
+                  <span class="work-tag">Courses</span>
+                  <span class="work-year">2026</span>
+                </div>
+                <h3>Nardebanino</h3>
+                <p>Warm, accessible website for an autism education platform focused on clarity and parental trust.</p>
+                <div class="work-attrs">
+                  <div class="work-attr"><strong>Type</strong>Semi-Custom Theme</div>
+                  <div class="work-attr"><strong>Field</strong>Autism Courses</div>
+                  <div class="work-attr"><strong>Design</strong>Responsive</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="work-slide">
+              <div class="work-img-wrap">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/work-8.webp" alt="Creativeplay" onerror="this.style.background='#1a1a1a'" />
+                <div class="work-overlay"><a href="https://creativeplay.ir/" target="_blank">View Website ↗</a></div>
+              </div>
+              <div class="work-info">
+                <div class="work-meta">
+                  <span class="work-tag">Redesign</span>
+                  <span class="work-tag">Education</span>
+                  <span class="work-year">2026</span>
+                </div>
+                <h3>Creativeplay</h3>
+                <p>Vibrant redesign for a creative movement courses platform, emphasizing playfulness and energy.</p>
+                <div class="work-attrs">
+                  <div class="work-attr"><strong>Type</strong>Website Redesign</div>
+                  <div class="work-attr"><strong>Field</strong>Creative Courses</div>
+                  <div class="work-attr"><strong>Design</strong>Responsive</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="work-slide">
+              <div class="work-img-wrap">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/work-4.webp" alt="NB Makeup" onerror="this.style.background='#1a1a1a'" />
+                <div class="work-overlay"><a href="https://nbmakeup.com/" target="_blank">View Website ↗</a></div>
+              </div>
+              <div class="work-info">
+                <div class="work-meta">
+                  <span class="work-tag">AI Startup</span>
+                  <span class="work-tag">Brand</span>
+                  <span class="work-year">2026</span>
+                </div>
+                <h3>NB Makeup</h3>
+                <p>Sleek brand and website for an AI-powered makeup startup, merging tech with beauty aesthetics.</p>
+                <div class="work-attrs">
+                  <div class="work-attr"><strong>Type</strong>Semi-Custom Theme</div>
+                  <div class="work-attr"><strong>Field</strong>AI & Beauty</div>
+                  <div class="work-attr"><strong>Design</strong>Responsive</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Custom Navigation -->
+      <div class="swiper-nav">
+        <button class="swiper-btn" id="workPrev">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="swiper-counter"><span id="workCurrent">1</span> / <span id="workTotal">8</span></div>
+        <button class="swiper-btn" id="workNext">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section id="service">
+    <div class="container">
+      <span class="section-label">Services</span>
+      <h2 class="section-title" style="max-width:480px">What I can<br>do for <span class="accent">you</span></h2>
+
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>WordPress Development</h3>
+          <p>I build custom WordPress websites that are fast, secure, and fully responsive — combining clean code with modern design to deliver a flawless experience across all devices.</p>
+          <ul class="service-features">
+            <li>Custom Theme Design</li>
+            <li>Responsive & Mobile-First</li>
+            <li>Performance Optimization</li>
+            <li>WooCommerce Integration</li>
+            <li>Secure & Modern Coding</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3>SEO & Content Marketing</h3>
+          <p>I create SEO-driven content strategies and targeted campaigns that boost visibility, attract the right audience, and turn visitors into loyal customers — backed by clear reporting.</p>
+          <ul class="service-features">
+            <li>Content Strategy & Production</li>
+            <li>On-Page SEO Optimization</li>
+            <li>Analytics & Reporting</li>
+            <li>Targeted Ad Campaigns</li>
+            <li>Conversion-Driven Content</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>Custom Plugin Development</h3>
+          <p>I develop lightweight, secure plugins tailored to your specific needs — fully compatible with WordPress and WooCommerce, without slowing down your site.</p>
+          <ul class="service-features">
+            <li>Custom Functionality Building</li>
+            <li>Optimized & Lightweight Code</li>
+            <li>WooCommerce Extensions</li>
+            <li>Core WordPress Compatibility</li>
+            <li>Secure & Scalable Solutions</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </div>
+          <h3>UI/UX Design</h3>
+          <p>I design intuitive, user-centered interfaces on Figma that look stunning and feel effortless to navigate — turning complex ideas into simple, beautiful digital experiences.</p>
+          <ul class="service-features">
+            <li>Custom UI Design</li>
+            <li>User-Centered UX Flow</li>
+            <li>Figma Prototyping</li>
+            <li>Interactive Wireframing</li>
+            <li>Visual Design Systems</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          </div>
+          <h3>Managed Server Hosting</h3>
+          <p>I provide high-performance hosting on dedicated German servers at Hetzner — ensuring maximum speed, enterprise-grade security, and reliable uptime so your site runs 24/7.</p>
+          <ul class="service-features">
+            <li>German Dedicated Server</li>
+            <li>Hetzner Data Center</li>
+            <li>High-Speed Performance</li>
+            <li>Enterprise-Grade Security</li>
+            <li>24/7 Server Monitoring</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+    <!-- ===================== TECH STACK ===================== -->
+  <section id="tech">
+    <div class="container">
+      <div class="tech-header">
+        <span class="section-label">Tech Stack</span>
+        <h2 class="section-title">See how my expertise<br>drives <span class="accent">better results</span></h2>
+      </div>
+
+      <div class="tech-grid">
+        <div class="tech-card">
+          <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/wordpress.svg" alt="WordPress" onerror="this.style.display='none'" />
+          <strong>WordPress</strong>
+          <span>Powerful CMS</span>
+        </div>
+        <div class="tech-card">
+          <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/elementor.svg" alt="Elementor" onerror="this.style.display='none'" />
+          <strong>Elementor</strong>
+          <span>Website Builder</span>
+        </div>
+        <div class="tech-card">
+          <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/visual-composer-icon.svg" alt="Visual Composer" onerror="this.style.display='none'" />
+          <strong>Visual Composer</strong>
+          <span>Classic Builder</span>
+        </div>
+        <div class="tech-card">
+          <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/tech-1.svg" alt="Figma" onerror="this.style.display='none'" />
+          <strong>Figma</strong>
+          <span>UI Design Tool</span>
+        </div>
+        <div class="tech-card">
+          <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/tailwind-2.svg" alt="Tailwind" onerror="this.style.display='none'" />
+          <strong>Tailwind</strong>
+          <span>Utility Framework</span>
+        </div>
+        <div class="tech-card">
+          <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/HTML1.svg" alt="HTML" onerror="this.style.display='none'" />
+          <strong>HTML</strong>
+          <span>Page Structure</span>
+        </div>
+        <div class="tech-card">
+          <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/CSS1.svg" alt="CSS" onerror="this.style.display='none'" />
+          <strong>CSS</strong>
+          <span>Visual Styling</span>
+        </div>
+        <div class="tech-card">
+          <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/JS1.svg" alt="JavaScript" onerror="this.style.display='none'" />
+          <strong>JavaScript</strong>
+          <span>Web Interactions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section id="testimonial">
+    <div class="container">
+      <div class="testi-header">
+        <div>
+          <span class="section-label">Testimonials</span>
+          <h2 class="section-title">Here's what<br>people are <span class="accent">saying</span></h2>
+        </div>
+        <div class="testi-stats">
+          <div class="testi-stat">
+            <strong id="count-fin">0</strong>
+            <span>Finalized projects</span>
+          </div>
+          <div class="testi-stat">
+            <strong id="count-sat">0</strong>
+            <span>Client satisfaction</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper testi-swiper" id="testiSwiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <p class="testi-quote">
+                Working with Ahmad was a smooth and professional experience. He understood our
+                vision quickly and turned it into a clean, modern website that feels reliable
+                and easy to manage.
+              </p>
+              <div class="testi-author">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/photo_2026-06-24_20-29-48.jpg" alt="Mona Ghodsi" class="testi-avatar" onerror="this.style.background='#222'" />
+                <div>
+                  <strong>Mona Ghodsi</strong>
+                  <span>CEO of Nardebanino</span>
+                </div>
+                <div class="testi-stars">★★★★★</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <p class="testi-quote">
+                Ahmad helped us build a website that matches our brand and works well for our
+                audience. His attention to detail, speed, and WordPress experience made the
+                whole process simple and efficient.
+              </p>
+              <div class="testi-author">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/photo_2026-06-24_20-28-17.jpg" alt="Ali Beheshti" class="testi-avatar" onerror="this.style.background='#222'" />
+                <div>
+                  <strong>Ali Beheshti</strong>
+                  <span>CEO of Creativeplay</span>
+                </div>
+                <div class="testi-stars">★★★★★</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="testi-card">
+              <p class="testi-quote">
+                Ahmad delivered a professional and well-structured website with a strong focus
+                on usability and performance. The final result was clean, practical, and exactly
+                aligned with our business needs.
+              </p>
+              <div class="testi-author">
+                <img src="https://ahmadnahvi.com/wp-content/uploads/2026/06/photo_2026-06-24_20-28-51.jpg" alt="Dr. Pashapor" class="testi-avatar" onerror="this.style.background='#222'" />
+                <div>
+                  <strong>Dr. Pashapor</strong>
+                  <span>CEO of Kimia Kala Razi</span>
+                </div>
+                <div class="testi-stars">★★★★★</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+
+        <!-- Left: Info -->
+        <div class="contact-info">
+          <span class="section-label">Contact</span>
+          <h2 class="section-title">Let's build<br>something <span class="accent">great</span></h2>
+          <p>
+            If you have a general or project enquiry, please drop me an email
+            or fill the form — available now.
+          </p>
+
+          <a href="mailto:Hi@ahmadnahvi.com" class="contact-email-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Hi@ahmadnahvi.com
+            <span>→</span>
+          </a>
+
+          <div class="contact-quote">
+            <p>"Design is not just what it looks like and feels like. Design is how it works."</p>
+            — Steve Jobs
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div>
+          <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" placeholder="John Doe" required />
+              </div>
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="john@example.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Subject</label>
+              <input type="text" placeholder="Project Inquiry" />
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea rows="6" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <div class="form-submit">
+              <button type="submit" class="btn-primary-custom">Send Message →</button>
+              <span class="form-note">Usually replies within 24 hours</span>
+            </div>
+            <div class="form-success" id="formSuccess">
+              ✓ Message sent! I'll get back to you soon.
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+    <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">Ahmad<span>.</span></div>
+
+        <nav class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#service">Services</a>
+          <a href="#tech">Tech</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="footer-social">
+          <a href="https://x.com/a_nahvi" target="_blank" title="X">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/a-nahvi" target="_blank" title="LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://instagram.com/a_nahvi" target="_blank" title="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+          <a href="https://github.com/a-nahvi" target="_blank" title="GitHub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+          <a href="https://t.me/a_nahvi" target="_blank" title="Telegram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Ahmad Nahvi. All rights reserved.</p>
+        <p>Built with <span style="color:var(--clr-accent)">♥</span> — HTML, CSS, JS</p>
+        <button class="back-to-top" onclick="lenis.scrollTo(0, {duration:1.5})" title="Back to top">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+    </div>
+  </footer>
+  <!-- ===================== SCRIPTS ===================== -->
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
+  <!-- Swiper -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    /* ===================== LENIS ===================== */
+    const lenis = new Lenis({
+      lerp: 0.12,
+      smoothWheel: true,
+      syncTouch: false,
+    });
+
+    /* ===================== GSAP + ScrollTrigger ===================== */
+    gsap.registerPlugin(ScrollTrigger);
+
+    // روش درست sync - فقط از یه RAF loop استفاده می‌کنیم
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    ScrollTrigger.scrollerProxy(document.body, {
+      scrollTop(value) {
+        if (arguments.length) {
+          lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect() {
+        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+      }
+    });
+
+    lenis.on('scroll', () => ScrollTrigger.update());
+
+    /* ===================== NAVBAR SCROLL ===================== */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 30);
+    });
+
+    /* ===================== HAMBURGER ===================== */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+
+    /* ===================== ACTIVE NAV LINK ===================== */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    /* ===================== TYPEWRITER ===================== */
+    const words = ['Designer', 'Developer', 'SEO Specialist'];
+    let wIdx = 0, cIdx = 0, deleting = false;
+    const tw = document.getElementById('typewriter');
+
+    function typeLoop() {
+      const word = words[wIdx];
+      if (!deleting) {
+        tw.textContent = word.slice(0, ++cIdx);
+        if (cIdx === word.length) { deleting = true; setTimeout(typeLoop, 1800); return; }
+      } else {
+        tw.textContent = word.slice(0, --cIdx);
+        if (cIdx === 0) { deleting = false; wIdx = (wIdx + 1) % words.length; }
+      }
+      setTimeout(typeLoop, deleting ? 60 : 100);
+    }
+    typeLoop();
+
+    /* ===================== COUNTER ANIMATION ===================== */
+    function animateCount(el, target, suffix = '+') {
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { el.textContent = target + suffix; clearInterval(timer); return; }
+        el.textContent = Math.floor(current) + suffix;
+      }, 20);
+    }
+
+    // Trigger when hero is visible
+    const heroObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCount(document.getElementById('count-years'), 15);
+          animateCount(document.getElementById('count-projects'), 50);
+          heroObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    heroObserver.observe(document.getElementById('home'));
+
+    /* ===================== GSAP HERO ENTRANCE ===================== */
+    gsap.timeline({ delay: 0.2 })
+      .from('.hero-tag', { y: 20, opacity: 0, duration: 0.6 })
+      .from('.hero-title', { y: 30, opacity: 0, duration: 0.7 }, '-=0.3')
+      .from('.hero-subtitle', { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
+      .from('.hero-actions', { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
+      .from('.hero-social', { y: 20, opacity: 0, duration: 0.5 }, '-=0.3')
+      .from('.hero-card', { x: 40, opacity: 0, duration: 0.8 }, '-=0.8');
+        /* ===================== CERTS SWIPER ===================== */
+    new Swiper('.certs-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 12,
+      loop: true,
+      autoplay: { delay: 3000, disableOnInteraction: false },
+    });
+
+    /* ===================== GSAP SCROLL REVEALS ===================== */
+    gsap.utils.toArray('[data-reveal]').forEach(el => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+        y: 40, opacity: 0, duration: 0.7, ease: 'power2.out'
+      });
+    });
+
+    // About section
+    gsap.from('.about-left', {
+      scrollTrigger: { trigger: '#about', start: 'top 75%' },
+      x: -40, opacity: 0, duration: 0.8, ease: 'power2.out'
+    });
+    gsap.from('.about-right', {
+      scrollTrigger: { trigger: '#about', start: 'top 75%' },
+      x: 40, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out'
+    });
+
+    // Timeline items
+    gsap.utils.toArray('.timeline-item').forEach((el, i) => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 88%' },
+        x: -20, opacity: 0, duration: 0.5, delay: i * 0.1, ease: 'power2.out'
+      });
+    });
+
+        /* ===================== WORK SWIPER ===================== */
+    const workSwiper = new Swiper('#workSwiper', {
+      slidesPerView: 1.1,
+      spaceBetween: 20,
+      loop: false,
+      breakpoints: {
+        640:  { slidesPerView: 1.5, spaceBetween: 24 },
+        900:  { slidesPerView: 2.2, spaceBetween: 24 },
+        1200: { slidesPerView: 2.6, spaceBetween: 28 },
+      },
+      on: {
+        slideChange(s) {
+          document.getElementById('workCurrent').textContent = s.realIndex + 1;
+        }
+      }
+    });
+
+    document.getElementById('workPrev').addEventListener('click', () => workSwiper.slidePrev());
+    document.getElementById('workNext').addEventListener('click', () => workSwiper.slideNext());
+    document.getElementById('workTotal').textContent = workSwiper.slides.length;
+
+    /* ===================== GSAP - SERVICES ===================== */
+    gsap.utils.toArray('.service-card').forEach((el, i) => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 88%' },
+        y: 40, opacity: 0, duration: 0.6,
+        delay: (i % 2) * 0.15,
+        ease: 'power2.out'
+      });
+    });
+        /* ===================== TESTIMONIALS SWIPER ===================== */
+    new Swiper('#testiSwiper', {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      loop: true,
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1100: { slidesPerView: 3 },
+      }
+    });
+
+    /* ===================== COUNTER - TESTIMONIALS ===================== */
+    const testiObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCount(document.getElementById('count-fin'), 50);
+          animateCount(document.getElementById('count-sat'), 98, '%');
+          testiObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    testiObserver.observe(document.getElementById('testimonial'));
+
+    /* ===================== GSAP - TECH + TESTIMONIAL ===================== */
+    gsap.utils.toArray('.tech-card').forEach((el, i) => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 90%' },
+        y: 30, opacity: 0, duration: 0.5,
+        delay: (i % 4) * 0.08,
+        ease: 'power2.out'
+      });
+    });
+
+    gsap.from('.testi-header', {
+      scrollTrigger: { trigger: '#testimonial', start: 'top 75%' },
+      y: 30, opacity: 0, duration: 0.7, ease: 'power2.out'
+    });
+
+    gsap.from('.contact-info', {
+      scrollTrigger: { trigger: '#contact', start: 'top 75%' },
+      x: -40, opacity: 0, duration: 0.8, ease: 'power2.out'
+    });
+
+    gsap.from('.contact-form', {
+      scrollTrigger: { trigger: '#contact', start: 'top 75%' },
+      x: 40, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out'
+    });
+
+    /* ===================== CONTACT FORM ===================== */
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type=submit]');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+        e.target.reset();
+        const success = document.getElementById('formSuccess');
+        success.style.display = 'block';
+        setTimeout(() => { success.style.display = 'none'; }, 4000);
+      }, 1500);
+    }
+
+    /* ===================== PWA - SERVICE WORKER ===================== */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+
+</body>
+</html>
