@@ -1361,6 +1361,27 @@
       color: var(--clr-accent);
       transform: translateY(-2px);
     }
+        /* =====================
+       PERFORMANCE
+    ===================== */
+    .hero-card,
+    .service-card,
+    .tech-card,
+    .work-slide,
+    .testi-card,
+    .cert-card {
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    /* غیرفعال کردن smooth scroll native - چون Lenis handle می‌کنه */
+    html { scroll-behavior: auto !important; }
+
+    /* کاهش motion برای کاربرایی که حساسیت دارن */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .marquee-track { animation: none; }
+    }
 
   </style>
 </head>
@@ -2435,28 +2456,176 @@
 
     /* ===================== GSAP SCROLL REVEALS ===================== */
     gsap.utils.toArray('[data-reveal]').forEach(el => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 85%' },
-        y: 40, opacity: 0, duration: 0.7, ease: 'power2.out'
+          /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
+
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
       });
+    }
+
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
     });
 
     // About section
-    gsap.from('.about-left', {
-      scrollTrigger: { trigger: '#about', start: 'top 75%' },
-      x: -40, opacity: 0, duration: 0.8, ease: 'power2.out'
-    });
-    gsap.from('.about-right', {
-      scrollTrigger: { trigger: '#about', start: 'top 75%' },
-      x: 40, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out'
-    });
+        /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
+
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
+      });
+    }
+
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
+        /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
+
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
+      });
+    }
+
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
 
     // Timeline items
     gsap.utils.toArray('.timeline-item').forEach((el, i) => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 88%' },
-        x: -20, opacity: 0, duration: 0.5, delay: i * 0.1, ease: 'power2.out'
+          /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
+
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
       });
+    }
+
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
     });
 
         /* ===================== WORK SWIPER ===================== */
@@ -2482,12 +2651,47 @@
 
     /* ===================== GSAP - SERVICES ===================== */
     gsap.utils.toArray('.service-card').forEach((el, i) => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 88%' },
-        y: 40, opacity: 0, duration: 0.6,
-        delay: (i % 2) * 0.15,
-        ease: 'power2.out'
+          /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
+
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
       });
+    }
+
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
     });
         /* ===================== TESTIMONIALS SWIPER ===================== */
     new Swiper('#testiSwiper', {
@@ -2516,28 +2720,174 @@
 
     /* ===================== GSAP - TECH + TESTIMONIAL ===================== */
     gsap.utils.toArray('.tech-card').forEach((el, i) => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 90%' },
-        y: 30, opacity: 0, duration: 0.5,
-        delay: (i % 4) * 0.08,
-        ease: 'power2.out'
+          /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
+
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
       });
+    }
+
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
     });
 
-    gsap.from('.testi-header', {
-      scrollTrigger: { trigger: '#testimonial', start: 'top 75%' },
-      y: 30, opacity: 0, duration: 0.7, ease: 'power2.out'
-    });
+        /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
 
-    gsap.from('.contact-info', {
-      scrollTrigger: { trigger: '#contact', start: 'top 75%' },
-      x: -40, opacity: 0, duration: 0.8, ease: 'power2.out'
-    });
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
+      });
+    }
 
-    gsap.from('.contact-form', {
-      scrollTrigger: { trigger: '#contact', start: 'top 75%' },
-      x: 40, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out'
-    });
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
+
+        /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
+
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
+      });
+    }
+
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
+
+        /* ===================== GSAP SCROLL REVEALS - بهینه ===================== */
+
+    // تابع کمکی برای ساخت reveal یکجا
+    function reveal(selector, vars = {}) {
+      gsap.utils.toArray(selector).forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+          },
+          y: vars.y ?? 36,
+          x: vars.x ?? 0,
+          opacity: 0,
+          duration: vars.duration ?? 0.65,
+          delay: vars.stagger ? i * vars.stagger : (vars.delay ?? 0),
+          ease: 'power2.out',
+          clearProps: 'all',
+        });
+      });
+    }
+
+    // About
+    reveal('.about-left',  { x: -36, y: 0 });
+    reveal('.about-right', { x:  36, y: 0, delay: 0.15 });
+
+    // Timeline
+    reveal('.timeline-item', { x: -16, y: 0, stagger: 0.09 });
+
+    // Services
+    reveal('.service-card', { stagger: 0.1 });
+
+    // Tech
+    reveal('.tech-card', { y: 24, stagger: 0.06 });
+
+    // Testimonial header
+    reveal('.testi-header', { y: 24 });
+
+    // Contact
+    reveal('.contact-info', { x: -36, y: 0 });
+    reveal('.contact-form',  { x:  36, y: 0, delay: 0.15 });
 
     /* ===================== CONTACT FORM ===================== */
     function handleSubmit(e) {
